@@ -11,7 +11,7 @@ import shapely
 import shapely.geometry as geometry
 import skimage.morphology
 from scipy.spatial import Delaunay
-from shapely.ops import cascaded_union, polygonize
+from shapely.ops import polygonize, unary_union
 
 
 def alpha_shape(points, alpha):
@@ -33,7 +33,8 @@ def alpha_shape(points, alpha):
     # loop over triangles:
     # ia, ib, ic = indices of corner points of the
     # triangle
-    for ia, ib, ic in tri.vertices:
+    # for ia, ib, ic in tri.vertices:
+    for ia, ib, ic in tri.simplices:
         pa = coords[ia]
         pb = coords[ib]
         pc = coords[ic]
@@ -54,7 +55,8 @@ def alpha_shape(points, alpha):
             add_edge(edges, edge_points, coords, ic, ia)
     m = geometry.MultiLineString(edge_points)
     triangles = list(polygonize(m))
-    return cascaded_union(triangles), edge_points
+    return unary_union(triangles), edge_points
+    # return cascaded_union(triangles), edge_points
 
 
 # concave_hull, edge_points = alpha_shape(points,
@@ -100,16 +102,30 @@ def concave_hull(input_file, output_dir, input_level, output_level, level_offset
 
     print("calculating concave hull, this might take a while..")
     concave_hull, edge_points = alpha_shape(points, alpha=alpha)
+#Commented
+    # if isinstance(concave_hull, shapely.geometry.polygon.Polygon) or isinstance(concave_hull, shapely.geometry.GeometryCollection):
+    #     polygons = [concave_hull]
+    # else:
+    #     polygons = list(concave_hull)
 
-    if isinstance(concave_hull, shapely.geometry.polygon.Polygon) or isinstance(concave_hull, shapely.geometry.GeometryCollection):
+    # coordinates = []
+    # for polygon in polygons:
+    #     coordinates.append([[x[0] * 2 ** (input_level + level_offset - output_level),
+    #                          x[1] * 2 ** (input_level + level_offset - output_level)] for x in polygon.boundary.coords[:-1]])
+#commented
+    if isinstance(concave_hull, shapely.geometry.polygon.Polygon):
         polygons = [concave_hull]
+    elif isinstance(concave_hull, shapely.geometry.MultiPolygon):
+        polygons = concave_hull.geoms
     else:
-        polygons = list(concave_hull)
+        raise ValueError("Unexpected geometry type: {}".format(type(concave_hull)))
 
     coordinates = []
     for polygon in polygons:
-        coordinates.append([[x[0] * 2 ** (input_level + level_offset - output_level),
-                             x[1] * 2 ** (input_level + level_offset - output_level)] for x in polygon.boundary.coords[:-1]])
+        if isinstance(polygon, shapely.geometry.polygon.Polygon):
+            polygon = [polygon]
+        coordinates.extend([[[x[0] * 2 ** (input_level + level_offset - output_level),
+                              x[1] * 2 ** (input_level + level_offset - output_level)] for x in poly.boundary.coords[:-1]] for poly in polygon])
     asap_annot = create_asap_xml_from_coords(coordinates)
 
     output_filename = os.path.basename(input_file).split('.')[0]
@@ -134,7 +150,7 @@ if __name__ == "__main__":
     args = collect_arguments()
     # files = glob.glob(args.input_path)
     # print(f'{files}')
-    files = [args.input_path + '/' + a for a in os.listdir(args.input_path) if '.' in a]
+    files = [args.input_path + '/' + a for a in os.listdir(args.input_path) if '.tif' in a]
     print(f'There are {len(files)} files to process')
     for f in files:
         ext = f.split('.')[-1]
@@ -143,6 +159,7 @@ if __name__ == "__main__":
         opt_name = os.path.join(args.output_dir,name)
         if not os.path.exists(args.output_dir):
             os.makedirs(args.output_dir)
+        # concave_hull(f, args.output_dir, args.input_level, args.output_level, args.level_offset, args.alpha, args.min_size)
         if not os.path.exists(opt_name):
             try:
                 concave_hull(f, args.output_dir, args.input_level, args.output_level, args.level_offset, args.alpha, args.min_size)

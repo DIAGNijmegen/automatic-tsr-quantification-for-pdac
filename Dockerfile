@@ -65,7 +65,7 @@ RUN : \
  
 
 # Set the working directory
-RUN pip3 install scikit-learn==1.0.2 scikit-image==0.18.0 albumentations==1.2.1 torchinfo wandb rdp
+RUN pip3 install scikit-learn==1.0.2 scikit-image==0.18.0 albumentations==1.2.1 torchinfo wandb rdp shapely pandas==1.2
 STOPSIGNAL SIGINT
 EXPOSE 22 6006 8888
 RUN useradd -m -s /bin/bash user && \
@@ -73,7 +73,7 @@ RUN useradd -m -s /bin/bash user && \
 RUN chown -R user:user /home/user/
 COPY --chown=user pathology-common /home/user/source/pathology-common
 COPY --chown=user pathology-fast-inference /home/user/source/pathology-fast-inference
-COPY --chown=user models /home/user/source/models
+#COPY --chown=user models /home/user/source/models
 COPY --chown=user code /home/user/source/code
 # COPY pathology-common /home/user/pathology-common
 # COPY pathology-fast-inference /home/user/pathology-fast-inference
@@ -85,7 +85,7 @@ RUN export JUPYTER_PATH="${JUPYTER_PATH}:/opt/ASAP/bin:/home/user/source/patholo
 RUN export PYTHONPATH="${PYTHONPATH}:/opt/ASAP/bin:/home/user/source/pathology-common:/home/user/source/pathology-fast-inference" # this does not work
 # Command to run your application
 COPY execute.sh /home/user/execute.sh
-COPY start.sh /home/user/start.sh
+#COPY start.sh /home/user/start.sh
 
 
 ENV PYTHONPATH=/opt/ASAP/bin/:/home/user/source/pathology-common:/home/user/source/pathology-fast-inference:$PYTHONPATH
