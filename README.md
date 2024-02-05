@@ -34,12 +34,12 @@ To train a model from scratch, assuming input images and masks are available, fo
 2. Create a dataset:
 ```python
     python3 source/pathology-common/scripts/createdataconfig.py --output "path/to/dataset.yaml" --images "/path/to/image/folder" --masks "/path/to/mask/folder" --labels [labels, in, the, mask] --spacing "2.0" (--random)
-labels is a list of integers representing the values in the mask (i.e. 0 = background, 1 = tissue, 2 = tumor)
+#labels is a list of integers representing the values in the mask (i.e. 0 = background, 1 = tissue, 2 = tumor)
 ```
 3. Create splits:
 ```python
     python3 source/pathology-common/scripts/createfoldsg.py --input "path/to/dataset.yaml" --output "/path/to/folds" --folds "x" (--overwrite)
-x is an integer representing the number of folds you want to create (i.e. 5)
+#x is an integer representing the number of folds you want to create (i.e. 5)
 ```
 3. Modify code/pytorch_run_experiment.sh by adding your wandb login token, specifiying a project name and passing the appropriate files, where data_path represents one single split (i.e. fold_0) previously created.
 4. Run the training script:
