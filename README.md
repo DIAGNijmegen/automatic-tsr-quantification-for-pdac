@@ -14,3 +14,10 @@
   - Apply inference.
   - Doublecheck that the .sh run_all_automatic_tsr.sh has correct paths to the input images. and run it.
     
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Contributing](#contributing)
+- [License](#license)
