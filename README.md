@@ -5,6 +5,8 @@
 - [Inference](#inference)
 - [Training](#training)
 - [TSR quantification](#tsr-quantification)
+- [Acknowledges](#acknowledges)
+- [License](#license)
 
 ## Installation
 1. Clone the repository
@@ -13,8 +15,14 @@
    ```
 
  2. Build the docker.
- 3. Run the docker
- 4. Download weights
+    ```bash
+    docker build . --tag=public_docker:latest
+    ```
+ 4. Run the docker.
+    ```bash
+    docker run  -p 8888:8888 public_docker:latest
+    ```
+ 6. (ONLY FOR INFERENCE) Download weights
 ```bash
     pip install gdown
     gdown --folder https://drive.google.com/drive/folders/1LzGj7nmuYVQwjcxFvUW7Zny3V1M-f6mM?usp=drive_link
@@ -65,6 +73,12 @@ Quantification of tumor stroma ratio for a given image is possible either by run
 ```
 The script produces a .csv file with the image name and the associated Tumor stroma Ratio.
 
+## Acknowledges
+Authors would like to thank Stan Noordman for the realisation of the flowchart.
+Authors would like to thank Thomas de Bel for the implementation and manteinance of [Pathology-common](./pathology-common) and [Pathology Fastinference](./pathology-fast-inference).
+
+## License
+This project is licensed under the [APACHE 2.0](license.txt) - see the [license.txt](license.txt) file for details.
   
 
 
