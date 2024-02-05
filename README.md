@@ -1,11 +1,4 @@
 # automatic-tsr-quantification-for-pdac
-
-
-##To download weights: 
-  1. pip install gdown
-  2. gdown --folder https://drive.google.com/drive/folders/1LzGj7nmuYVQwjcxFvUW7Zny3V1M-f6mM?usp=drive_link
-
-
 ###Steps
   - clone the repo and build the docker.
   - Run the docker.
@@ -21,3 +14,17 @@
 - [Features](#features)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Installation
+1. Clone the repository
+   ```bash
+   git clone https://github.com/DIAGNijmegen/automatic-tsr-quantification-for-pdac.git
+
+ 2. Build the docker.
+ 3. Run the docker
+ 4. Download weights
+  ```markdown
+  ## Usage
+  ```bash
+  pip install gdown
+  gdown --folder https://drive.google.com/drive/folders/1LzGj7nmuYVQwjcxFvUW7Zny3V1M-f6mM?usp=drive_link
