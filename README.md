@@ -9,7 +9,7 @@
 - [License](#license)
 
 ## Installation
-1. Clone the repository
+1. Clone the repository.
    ```bash
    git clone https://github.com/DIAGNijmegen/automatic-tsr-quantification-for-pdac.git
    ```
@@ -22,7 +22,7 @@
     ```bash
     docker run  -p 8888:8888 public_docker:latest
     ```
- 6. (ONLY FOR INFERENCE) Download weights
+ 6. (ONLY FOR INFERENCE) Download weights.
 ```bash
     pip install gdown
     gdown --folder https://drive.google.com/drive/folders/1LzGj7nmuYVQwjcxFvUW7Zny3V1M-f6mM?usp=drive_link
@@ -36,19 +36,19 @@ To apply inference on data iterate through the following steps:
     bash source/code/schedule_tumor_characterization.sh
 ```
 After inference, multiple .tif images are created in the corresponding folders:
-1. Epithelium
+1. Epithelium:
    The produced _image_name_epithelium.tif_  Is a three channels image where label 1 represents the tissue (in light Blue), label 2 represents the Healthy epithelium (in Green) and label 3 represents the Tumor epithelium (in Yellow).
    ![Local Image](./example_images/Tumor_vs_healthy_epithelium.png)
-3. Multi_Tissue
+3. Multi_Tissue:
    The produced _image_name_multi_tissue.tif_  Is a eight channels image where label 1 represents the Stroma (in light Blue), label 2 represents the Fat (in Green), label 3 represents the Lumina (in Yellow), label 4 represents the Muscle (in Orange), label 5 represents Granulocytes (in Purple), label 6 represents Mucus (in dark Purple), label 7 represents Healthy epithelium (in Blue), label 8 represents Tumor epithelium (in Black).
    ![Local Image](./example_images/Multi_Tissue.png)
-5. Tumor
+5. Tumor:
    The produced _image_name_tumor.tif_  Is a one channels image where label 1 represents the convex hull created around the segmented Tumor epithelium (in light Blue).
    ![Local Image](./example_images/Tumor_convex_hull.png)
 
 ## Training
 To train a model from scratch, assuming input images and masks are available, follow these steps:
-1. Create a network_configuration.yaml (following the example from code/network_configuration.yaml
+1. Create a network_configuration.yaml (following the example from code/network_configuration.yaml.
 2. Create a dataset:
 ```python
     python3 source/pathology-common/scripts/createdataconfig.py --output "path/to/dataset.yaml" --images "/path/to/image/folder" --masks "/path/to/mask/folder" --labels [labels, in, the, mask] --spacing "2.0" (--random)
