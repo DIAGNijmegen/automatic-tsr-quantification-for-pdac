@@ -79,7 +79,8 @@ Authors would like to thank Thomas de Bel for the implementation and manteinance
 
 ## License
 This project is licensed under the [APACHE 2.0](license.txt) - see the [license.txt](license.txt) file for details.
-  
+
+For question and support feel free to contatct Pierpaolo Vendittelli (pierpaolo.vendittelli@radboudumc.nl)
 
 
 
